@@ -25,3 +25,5 @@ nbdist/
 
 ### MACOS ###
 .DS_Store
+
+.vscode

@@ -44,7 +44,7 @@ public class BlueprintsServices {
         
         if(bpp!=null && author!=null && name!=null) { bpp.getBlueprint(author, name); }
         
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("It could not be possible to get the Blueprint made by " + author + " with name " + name); 
     }
     
     /**
@@ -57,7 +57,7 @@ public class BlueprintsServices {
         
         if(bpp!=null && author!=null) { bpp.getBlueprint(author,null); }
         
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("The Blueprint made by " + author + " does not exist."); 
     }
     
 }
