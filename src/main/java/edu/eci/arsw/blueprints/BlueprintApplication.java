@@ -9,7 +9,7 @@ import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
 import edu.eci.arsw.blueprints.services.BlueprintsServices;
 
 @SpringBootApplication
-public class AppCoreApplication {
+public class BlueprintApplication {
 
 	public static void main(String[] args) {
 		Blueprint bp = new Blueprint("dsbaenar","blueprint1");
