@@ -8,6 +8,7 @@ package edu.eci.arsw.blueprints.services;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,8 +26,22 @@ public class BlueprintsServices {
     @Autowired
     BlueprintsPersistence bpp=null;
     
-    public void addNewBlueprint(Blueprint bp){
-        
+    public BlueprintsServices(BlueprintsPersistence bpp){
+        this.bpp=bpp;
+    }
+    /**
+     * This method adds a new blueprint to the system
+     * @param bp
+     * 
+     */
+    public void addNewBlueprint(Blueprint bp) {
+        try{
+            if (bpp != null) {
+                bpp.saveBlueprint(bp);
+                }
+        } catch (BlueprintPersistenceException ex) {
+            ex.printStackTrace();    
+        }
     }
     
     public Set<Blueprint> getAllBlueprints(){
@@ -42,10 +57,10 @@ public class BlueprintsServices {
      */
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
         
-        if(bpp!=null && author!=null && name!=null) { bpp.getBlueprint(author, name); }
-        
-        throw new UnsupportedOperationException("It could not be possible to get the Blueprint made by " + author + " with name " + name); 
+        if(author!=null && name!=null) { return bpp.getBlueprint(author, name); }
+        throw new BlueprintNotFoundException("The Blueprint made by " + author + " with name " + name + " does not exist.");
     }
+
     
     /**
      * 
@@ -55,7 +70,7 @@ public class BlueprintsServices {
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
         
-        if(bpp!=null && author!=null) { bpp.getBlueprint(author,null); }
+        if(author!=null) { bpp.getBlueprint(author,null); }
         
         throw new UnsupportedOperationException("The Blueprint made by " + author + " does not exist."); 
     }

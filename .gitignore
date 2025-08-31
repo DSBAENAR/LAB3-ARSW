@@ -24,6 +24,6 @@ nbdist/
 /nbproject/
 
 ### MACOS ###
-.DS_Store
+*.DS_Store
 
 .vscode
