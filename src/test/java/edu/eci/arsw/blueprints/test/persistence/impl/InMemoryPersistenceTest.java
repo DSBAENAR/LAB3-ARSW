@@ -12,8 +12,10 @@ import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -21,6 +23,7 @@ import static org.junit.Assert.*;
  */
 public class InMemoryPersistenceTest {
     
+    /*~~(org/openrewrite/staticanalysis/LambdaBlockToExpression)~~>*/
     @Test
     public void saveNewAndLoadTest() throws BlueprintPersistenceException, BlueprintNotFoundException{
         InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
@@ -35,9 +38,9 @@ public class InMemoryPersistenceTest {
         
         ibpp.saveBlueprint(bp);
         
-        assertNotNull("Loading a previously stored blueprint returned null.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()));
+        assertNotNull(ibpp.getBlueprint(bp.getAuthor(), bp.getName()),"Loading a previously stored blueprint returned null.");
         
-        assertEquals("Loading a previously stored blueprint returned a different blueprint.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()), bp);
+        assertEquals(ibpp.getBlueprint(bp.getAuthor(), bp.getName()), bp, "Loading a previously stored blueprint returned a different blueprint.");
         
     }
 
