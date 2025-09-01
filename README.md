@@ -20,8 +20,95 @@ En este ejercicio se va a construír un modelo de clases para la capa lógica de
 
 	Lo anterior requiere:
 
-	* Agregar las dependencias de Spring.
+	* Agregar las dependencias de Spring. <br>
+	Para este proyecto hice una actualización pasando las dependencias a SpringBoot
+	```pom
+	 <?xml version="1.0" encoding="UTF-8"?>
+	<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>edu.eci.pdsw.examples</groupId>
+    <artifactId>blueprints-middleware</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Blueprints_Middleware</name>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.3</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.13.4</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+	</project>
+
+ 	```
 	* Agregar la configuración de Spring.
+
+	Y creé el método main dentro de la clase creada BlueprintApplication
+	```java
+	 package edu.eci.arsw.blueprints;
+	
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	
+	import edu.eci.arsw.blueprints.model.Blueprint;
+	import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+	import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
+	import edu.eci.arsw.blueprints.services.BlueprintsServices;
+	
+	@SpringBootApplication
+	public class BlueprintApplication {
+
+	public static void main(String[] args) {
+		Blueprint bp = new Blueprint("dsbaenar","blueprint1");
+		InMemoryBlueprintPersistence ibp = new InMemoryBlueprintPersistence();
+		BlueprintsServices bps = new BlueprintsServices(ibp);
+		bps.addNewBlueprint(bp);
+		try {
+			System.out.println(bps.getBlueprint("dsbaenar", "blueprint1"));
+		} catch (BlueprintNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	}
+
+ 	```
 	* Configurar la aplicación -mediante anotaciones- para que el esquema de persistencia sea inyectado al momento de ser creado el bean 'BlueprintServices'.
 
 	```java
@@ -35,7 +122,7 @@ En este ejercicio se va a construír un modelo de clases para la capa lógica de
  	```
 
 
-2. Complete los operaciones getBluePrint() y getBlueprintsByAuthor(). Implemente todo lo requerido de las capas inferiores (por ahora, el esquema de persistencia disponible 'InMemoryBlueprintPersistence') agregando las pruebas correspondientes en 'InMemoryPersistenceTest'.
+3. Complete los operaciones getBluePrint() y getBlueprintsByAuthor(). Implemente todo lo requerido de las capas inferiores (por ahora, el esquema de persistencia disponible 'InMemoryBlueprintPersistence') agregando las pruebas correspondientes en 'InMemoryPersistenceTest'.
 
    ```java
    public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
