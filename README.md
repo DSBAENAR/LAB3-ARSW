@@ -125,25 +125,38 @@ En este ejercicio se va a construír un modelo de clases para la capa lógica de
 3. Complete los operaciones getBluePrint() y getBlueprintsByAuthor(). Implemente todo lo requerido de las capas inferiores (por ahora, el esquema de persistencia disponible 'InMemoryBlueprintPersistence') agregando las pruebas correspondientes en 'InMemoryPersistenceTest'.
 
    ```java
-   public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        
-        if(bpp!=null && author!=null && name!=null) { bpp.getBlueprint(author, name); }
-        
-        throw new UnsupportedOperationException("Not supported yet."); 
+   public void addNewBlueprint(Blueprint bp) {
+        try{
+            if (bpp != null) {
+                bpp.saveBlueprint(bp);
+                }
+        } catch (BlueprintPersistenceException ex) {
+            ex.printStackTrace();    
+        }
     }
 
    public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
         
-        if(bpp!=null && author!=null) { bpp.getBlueprint(author,null); }
+        if(author!=null) { bpp.getBlueprint(author,null); }
         
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("The Blueprint made by " + author + " does not exist."); 
     }
    ```
 
-4. Haga un programa en el que cree (mediante Spring) una instancia de BlueprintServices, y rectifique la funcionalidad del mismo: registrar planos, consultar planos, registrar planos específicos, etc.
+   Durante el desarrollo me dí cuenta que había un constructor de name y author mal implementado en el modelo, agregué this.author = author
 
-5. Se quiere que las operaciones de consulta de planos realicen un proceso de filtrado, antes de retornar los planos consultados. Dichos filtros lo que buscan es reducir el tamaño de los planos, removiendo datos redundantes o simplemente submuestrando, antes de retornarlos. Ajuste la aplicación (agregando las abstracciones e implementaciones que considere) para que a la clase BlueprintServices se le inyecte uno de dos posibles 'filtros' (o eventuales futuros filtros). No se contempla el uso de más de uno a la vez:
+   ```java
+    public Blueprint(String author, String name){
+        this.name=name;
+        this.author=author;
+        points=new ArrayList<>();
+    }
+   ```
+
+5. Haga un programa en el que cree (mediante Spring) una instancia de BlueprintServices, y rectifique la funcionalidad del mismo: registrar planos, consultar planos, registrar planos específicos, etc.
+
+7. Se quiere que las operaciones de consulta de planos realicen un proceso de filtrado, antes de retornar los planos consultados. Dichos filtros lo que buscan es reducir el tamaño de los planos, removiendo datos redundantes o simplemente submuestrando, antes de retornarlos. Ajuste la aplicación (agregando las abstracciones e implementaciones que considere) para que a la clase BlueprintServices se le inyecte uno de dos posibles 'filtros' (o eventuales futuros filtros). No se contempla el uso de más de uno a la vez:
 	* (A) Filtrado de redundancias: suprime del plano los puntos consecutivos que sean repetidos.
 	* (B) Filtrado de submuestreo: suprime 1 de cada 2 puntos del plano, de manera intercalada.
 
-6. Agrege las pruebas correspondientes a cada uno de estos filtros, y pruebe su funcionamiento en el programa de prueba, comprobando que sólo cambiando la posición de las anotaciones -sin cambiar nada más-, el programa retorne los planos filtrados de la manera (A) o de la manera (B). 
+8. Agrege las pruebas correspondientes a cada uno de estos filtros, y pruebe su funcionamiento en el programa de prueba, comprobando que sólo cambiando la posición de las anotaciones -sin cambiar nada más-, el programa retorne los planos filtrados de la manera (A) o de la manera (B). 
