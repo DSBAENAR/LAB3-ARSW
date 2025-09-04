@@ -36,6 +36,7 @@ public interface BlueprintsPersistence {
     /**
      * 
      * @return all the blueprints in the system
+     * @throws BlueprintPersistenceException if there are no blueprints
      */
     public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException;
     

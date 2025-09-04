@@ -27,13 +27,18 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
 
     public InMemoryBlueprintPersistence() {
-        //load stub data
+        
         Point[] pts=new Point[]{new Point(140, 140),new Point(115, 115)};
         Blueprint bp=new Blueprint("_authorname_", "_bpname_ ",pts);
         blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         
     }    
     
+    /**
+     * @param bp the new blueprint
+     * @throws BlueprintPersistenceException if a blueprint with the same name already exists,
+     *    or any other low-level persistence error occurs.
+     */
     @Override
     public void saveBlueprint(Blueprint bp) throws BlueprintPersistenceException {
         if (blueprints.containsKey(new Tuple<>(bp.getAuthor(),bp.getName()))){
@@ -44,11 +49,21 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         }        
     }
 
+    /*
+     * @param author blueprint's author
+     * @param bprintname blueprint's name
+     * @return the blueprint of the given name and author
+     * @throws BlueprintNotFoundException if there is no such blueprint
+     */
     @Override
     public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
         return blueprints.get(new Tuple<>(author, bprintname));
     }
 
+    /**
+     * @return all the blueprints in the system
+     * @throws BlueprintPersistenceException if there are no blueprints
+     */
     @Override
     public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException {
         if (blueprints.isEmpty()){
@@ -56,7 +71,5 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         }
         return Set.copyOf(blueprints.values());
     }
-
-    
     
 }
