@@ -32,20 +32,28 @@ public class BlueprintsServices {
     /**
      * This method adds a new blueprint to the system
      * @param bp
+     * @throws BlueprintNotFoundException 
      * 
      */
-    public void addNewBlueprint(Blueprint bp) {
-        try{
-            if (bpp != null) {
+    public Blueprint addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
+        try {
+            Blueprint existingBp = bpp.getBlueprint(bp.getAuthor(), bp.getName());
+            if (!bp.equals(existingBp)) {
                 bpp.saveBlueprint(bp);
-                }
-        } catch (BlueprintPersistenceException ex) {
-            ex.printStackTrace();    
+            } else {
+                throw new BlueprintPersistenceException("The given blueprint already exists: " + bp.getAuthor() + " - > " + bp.getName());
+            }
+        } catch (BlueprintNotFoundException e) {
+            bpp.saveBlueprint(bp);
         }
+        return bp;
     }
-    
-    public Set<Blueprint> getAllBlueprints(){
-        return null;
+
+    public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException {
+        if (bpp != null) {
+            return bpp.getAllBlueprints();
+        }
+        throw new BlueprintPersistenceException("There are no Blueprints.");
     }
     
     /**
@@ -58,6 +66,7 @@ public class BlueprintsServices {
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
         
         if(author!=null && name!=null) { return bpp.getBlueprint(author, name); }
+        
         throw new BlueprintNotFoundException("The Blueprint made by " + author + " with name " + name + " does not exist.");
     }
 
@@ -72,7 +81,14 @@ public class BlueprintsServices {
         
         if(author!=null) { bpp.getBlueprint(author,null); }
         
-        throw new UnsupportedOperationException("The Blueprint made by " + author + " does not exist."); 
+        throw new BlueprintNotFoundException("The Blueprint made by " + author + " does not exist."); 
     }
-    
+
+    public Set<Blueprint> getBlueprintsByName(String name) throws BlueprintNotFoundException{
+        
+        if(name!=null) { bpp.getBlueprint(null,name);}
+        
+        throw new BlueprintNotFoundException("The Blueprint " + name + " does not exist."); 
+    }
+
 }

@@ -75,9 +75,10 @@ public class Blueprint {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (this.points.size()!=other.points.size()){
-            return false;
+        if (Objects.equals(points, other.points)) {
+            return true;
         }
+        
         for (int i=0;i<this.points.size();i++){
             if (this.points.get(i)!=other.points.get(i)){
                 return false;
