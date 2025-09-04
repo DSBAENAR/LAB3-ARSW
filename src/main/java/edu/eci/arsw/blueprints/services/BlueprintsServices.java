@@ -6,12 +6,9 @@
 package edu.eci.arsw.blueprints.services;
 
 import edu.eci.arsw.blueprints.model.Blueprint;
-import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,19 +33,15 @@ public class BlueprintsServices {
      * 
      */
     public Blueprint addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
-        try {
-            Blueprint existingBp = bpp.getBlueprint(bp.getAuthor(), bp.getName());
-            if (!bp.equals(existingBp)) {
-                bpp.saveBlueprint(bp);
-            } else {
-                throw new BlueprintPersistenceException("The given blueprint already exists: " + bp.getAuthor() + " - > " + bp.getName());
-            }
-        } catch (BlueprintNotFoundException e) {
-            bpp.saveBlueprint(bp);
-        }
+        bpp.saveBlueprint(bp); 
         return bp;
     }
 
+    /**
+     * 
+     * @return all the blueprints in the system
+     * @throws BlueprintPersistenceException if there are no blueprints
+     */
     public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException {
         if (bpp != null) {
             return bpp.getAllBlueprints();
@@ -84,6 +77,12 @@ public class BlueprintsServices {
         throw new BlueprintNotFoundException("The Blueprint made by " + author + " does not exist."); 
     }
 
+    /**
+     * 
+     * @param name blueprint's name
+     * @return all the blueprints with the given name
+     * @throws BlueprintNotFoundException if the given name doesn't exist
+     */
     public Set<Blueprint> getBlueprintsByName(String name) throws BlueprintNotFoundException{
         
         if(name!=null) { bpp.getBlueprint(null,name);}

@@ -50,7 +50,10 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     }
 
     @Override
-    public Set<Blueprint> getAllBlueprints() {
+    public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException {
+        if (blueprints.isEmpty()){
+            throw new BlueprintPersistenceException("There are no Blueprints.");
+        }
         return Set.copyOf(blueprints.values());
     }
 
