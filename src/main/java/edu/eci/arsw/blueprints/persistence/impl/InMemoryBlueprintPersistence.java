@@ -6,7 +6,6 @@
 package edu.eci.arsw.blueprints.persistence.impl;
 
 import edu.eci.arsw.blueprints.model.Blueprint;
-import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
@@ -17,8 +16,8 @@ import java.util.Set;
 import org.springframework.stereotype.Repository;
 
 /**
- *
- * @author hcadavid
+ * A blueprint persistence implementation that stores blueprints in memory.
+ * @author dsbaenar
  */
 
 @Repository
@@ -26,6 +25,9 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
     private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
 
+    /**
+     * Constructor for InMemoryBlueprintPersistence.
+     */
     public InMemoryBlueprintPersistence() {}    
     
     /**
@@ -49,7 +51,8 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
      * @return Blueprint
      * @throws BlueprintNotFoundException
      */
-    /*
+    
+    /**
      * @param author blueprint's author
      * @param bprintname blueprint's name
      * @return the blueprint of the given name and author
@@ -76,9 +79,9 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     }
 
     /** 
-     * @param bp
-     * @throws BlueprintPersistenceException
-     * @throws BlueprintNotFoundException
+     * @param bp the blueprint to update
+     * @throws BlueprintPersistenceException if a blueprint with the same name already exists
+     * @throws BlueprintNotFoundException if the blueprint doesn't exist
      */
     @Override
     public void updateBlueprint(Blueprint bp) throws BlueprintPersistenceException, BlueprintNotFoundException {
@@ -89,9 +92,9 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     }
 
     /** 
-     * @param bp
-     * @throws BlueprintNotFoundException
-     * @throws BlueprintPersistenceException
+     * @param bp the blueprint to delete
+     * @throws BlueprintNotFoundException if the blueprint doesn't exist
+     * @throws BlueprintPersistenceException if there's an error during persistence
      */
     @Override
     public void deleteBlueprint(Blueprint bp) throws BlueprintNotFoundException, BlueprintPersistenceException {

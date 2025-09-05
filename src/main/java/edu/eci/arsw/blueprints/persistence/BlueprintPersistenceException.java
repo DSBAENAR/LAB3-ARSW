@@ -6,21 +6,21 @@
 package edu.eci.arsw.blueprints.persistence;
 
 /**
- *
+ * Exception thrown when a persistence error occurs.
  * @author hcadavid
  */
 public class BlueprintPersistenceException extends Exception{
 
     /**
-     * @param message
+     * @param message the detail message
      */
     public BlueprintPersistenceException(String message) {
         super(message);
     }
 
     /**
-     * @param message
-     * @param cause
+     * @param message the detail message
+     * @param cause the cause
      */
     public BlueprintPersistenceException(String message, Throwable cause) {
         super(message, cause);

@@ -9,10 +9,14 @@ import org.springframework.stereotype.Component;
 
 @Primary
 @Component("redundancyFilter")
+
+/**
+ * A filter that removes redundant points from a blueprint.
+ */
 public class RedundancyFilter implements BlueprintFilter {
 
-    /** 
-     * @param bp
+    /**
+     * @param bp the blueprint to filter
      * @return Blueprint
      */
     @Override
@@ -22,7 +26,6 @@ public class RedundancyFilter implements BlueprintFilter {
         }
         List<Point> pts = bp.getPoints();
         if (pts == null || pts.size() <= 1) {
-            // return a copy
             List<Point> copy = pts == null ? new ArrayList<>() : new ArrayList<>(pts);
             Blueprint bpCopy = new Blueprint(bp.getAuthor(), bp.getName());
             for (Point pt : copy) {

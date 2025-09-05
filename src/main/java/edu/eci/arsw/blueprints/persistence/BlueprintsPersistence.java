@@ -10,14 +10,14 @@ import java.util.Set;
 import edu.eci.arsw.blueprints.model.Blueprint;
 
 /**
- *
+ * Interface for blueprint persistence.
  * @author hcadavid
  * @author dsbaenar
  */
 public interface BlueprintsPersistence {
     
     /**
-     * 
+     * Saves a new blueprint.
      * @param bp the new blueprint
      * @throws BlueprintPersistenceException if a blueprint with the same name already exists,
      *    or any other low-level persistence error occurs.
@@ -25,7 +25,7 @@ public interface BlueprintsPersistence {
     public void saveBlueprint(Blueprint bp) throws BlueprintPersistenceException;
     
     /**
-     * 
+     * Gets a blueprint by its author and name.
      * @param author blueprint's author
      * @param bprintname blueprint's author
      * @return the blueprint of the given name and author
@@ -35,7 +35,7 @@ public interface BlueprintsPersistence {
 
     
     /**
-     * 
+     * Gets all the blueprints in the system.
      * @return all the blueprints in the system
      * @throws BlueprintPersistenceException if there are no blueprints
      */

@@ -18,7 +18,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Service for managing blueprints.
+ * @author dsbaenar
  * @author hcadavid
  */
 @Service
@@ -31,6 +32,13 @@ public class BlueprintsServices {
     private final BlueprintFilter redundancyFilter;
     private final BlueprintFilter subsamplingFilter;
 
+    /**
+     * Constructor for BlueprintsServices.
+     * @param bpp the blueprint persistence
+     * @param bpf the blueprint filter
+     * @param redundancyFilter the redundancy filter
+     * @param subsamplingFilter the subsampling filter
+     */
     public BlueprintsServices(BlueprintsPersistence bpp, BlueprintFilter bpf, @Qualifier("redundancyFilter") BlueprintFilter redundancyFilter, @Qualifier("subsamplingFilter") BlueprintFilter subsamplingFilter) {
         this.bpp = bpp;
         this.redundancyFilter = redundancyFilter;
@@ -39,9 +47,9 @@ public class BlueprintsServices {
     }
     /**
      * This method adds a new blueprint to the system
-     * @param bp
-     * @throws BlueprintNotFoundException 
-     * 
+     * @param bp the new blueprint
+     * @throws BlueprintPersistenceException if a blueprint with the same name already exists
+     * @return the added blueprint
      */
     public Blueprint addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
         bpp.saveBlueprint(bp); 
@@ -49,7 +57,7 @@ public class BlueprintsServices {
     }
 
     /**
-     * 
+     * Get all blueprints.
      * @return all the blueprints in the system
      * @throws BlueprintPersistenceException if there are no blueprints
      */
@@ -99,8 +107,8 @@ public class BlueprintsServices {
      * 
      * @param name blueprint's name
      * @return all the blueprints with the given name
-     * @throws BlueprintNotFoundException if the given name doesn't exist
-     * @throws BlueprintPersistenceException 
+     * @throws BlueprintPersistenceException if the given name doesn't exist
+     *   
      */
     public Set<Blueprint> getBlueprintsByName(String name) throws BlueprintPersistenceException{
         

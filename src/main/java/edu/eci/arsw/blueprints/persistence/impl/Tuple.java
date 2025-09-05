@@ -7,28 +7,36 @@ public class Tuple<T1, T2> {
     T1 o1;
     T2 o2;
 
+    /**
+     * Constructor for Tuple.
+     * @param o1 the first element
+     * @param o2 the second element
+     */
     public Tuple(T1 o1, T2 o2) {
         super();
         this.o1 = o1;
         this.o2 = o2;
     }
 
-    /** 
-     * @return T1
+    /**
+     * Gets the first element of the tuple.
+     * @return T1 the first element
      */
     public T1 getElem1() {
         return o1;
     }
 
-    /** 
-     * @return T2
+    /**
+     * Gets the second element of the tuple.
+     * @return T2 the second element
      */
     public T2 getElem2() {
         return o2;
     }
 
-    /** 
-     * @return int
+    /**
+     * Gets the hash code of the tuple.
+     * @return int the hash code
      */
     @Override
     public int hashCode() {
@@ -38,10 +46,11 @@ public class Tuple<T1, T2> {
         return hash;
     }
 
-    
-    /** 
-     * @param obj
-     * @return boolean
+
+    /**
+     * Checks if this tuple is equal to another object.
+     * @param obj the object to compare
+     * @return boolean true if equal, false otherwise
      */
     @Override
     public boolean equals(Object obj) {

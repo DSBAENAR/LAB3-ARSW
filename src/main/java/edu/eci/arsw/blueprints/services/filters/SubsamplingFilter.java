@@ -7,8 +7,16 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component("subsamplingFilter")
+
+/**
+ * A filter that applies subsampling to a blueprint.
+ */
 public class SubsamplingFilter implements BlueprintFilter {
 
+    /**
+     * @param bp the blueprint to filter
+     * @return Blueprint
+     */
     @Override
     public Blueprint filter(Blueprint bp) {
         if (bp == null) {

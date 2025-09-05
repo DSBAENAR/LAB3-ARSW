@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * Represents a blueprint consisting of an author, name, and a list of points.
+ * @author hcadavid
+ * @author dsbaenar
+ */
 public class Blueprint {
 
     private String author=null;
@@ -14,23 +19,38 @@ public class Blueprint {
     private List<Point> points=null;
     
     private String name=null;
-            
+
+    /**
+     * Constructor for Blueprint.
+     * @param author blueprint's author
+     * @param name blueprint's name
+     * @param pnts array of points
+     */
     public Blueprint(String author,String name,Point[] pnts){
         this.author=author;
         this.name=name;
         points=Arrays.asList(pnts);
     }
-         
+
+    /**
+     * Constructor for Blueprint.
+     * @param author blueprint's author
+     * @param name blueprint's name
+     */
     public Blueprint(String author, String name){
         this.name=name;
         this.author=author;
         points=new ArrayList<>();
     }
 
+    /**
+     * Default constructor for Blueprint.
+     */
     public Blueprint() {
     }    
     
     /** 
+     * Get the name of the blueprint.
      * @return String
      */
     public String getName() {
@@ -38,21 +58,24 @@ public class Blueprint {
     }
 
     /** 
+     * Get the author of the blueprint.
      * @return String
      */
     public String getAuthor() {
         return author;
     }
     
-    /** 
-     * @return List<Point>
+    /**
+     * Get points from the blueprint.
+     * @return {@link java.util.List} of {@link edu.eci.arsw.blueprints.model.Point}
      */
     public List<Point> getPoints() {
         return points;
     }
     
     /** 
-     * @param p
+     * Add a point to the blueprint.
+     * @param p the point to add
      */
     public void addPoint(Point p){
         this.points.add(p);
@@ -76,8 +99,9 @@ public class Blueprint {
     }
 
     /** 
-     * @param obj
-     * @return boolean
+     * Checks if two blueprints are equal.
+     * @param obj the object to compare
+     * @return boolean true if the blueprints are equal, false otherwise
      */
     @Override
     public boolean equals(Object obj) {

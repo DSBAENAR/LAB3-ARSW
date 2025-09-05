@@ -23,14 +23,25 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/blueprints")
+/**
+ * Controller for managing blueprints.
+ */
 public class BlueprintController {
 
     private final BlueprintsServices bps;
 
+    /**
+     * Constructor for BlueprintController.
+     * @param bps the BlueprintsServices instance
+     */
     public BlueprintController(BlueprintsServices bps) {
         this.bps = bps;
     }
 
+    /**
+     * Get all blueprints.
+     * @return ResponseEntity
+     */
     @GetMapping("")
     public ResponseEntity<?> getAllBlueprints() {
         try{
@@ -40,6 +51,11 @@ public class BlueprintController {
         }
     }
 
+    /**
+     * Get a blueprint by author.
+     * @param author the author of the blueprint
+     * @return ResponseEntity
+     */
     @GetMapping("/blueprint/author/{author}")
     public ResponseEntity<?> getBlueprintByAuthor(@PathVariable String author){
         try {
@@ -50,6 +66,12 @@ public class BlueprintController {
         }
     }
 
+
+    /**
+     * Get a blueprint by name.
+     * @param name the name of the blueprint
+     * @return ResponseEntity
+     */
     @GetMapping("/blueprint/name/{name}")
     public ResponseEntity<?> getBlueprintByName(@PathVariable String name){
         try {
@@ -60,7 +82,11 @@ public class BlueprintController {
         }
     }
 
-
+    /**
+     * Add a new blueprint.
+     * @param bp the blueprint to add
+     * @return ResponseEntity
+     */
     @PostMapping("/blueprint")
     public ResponseEntity<?> addBlueprint(@RequestBody Blueprint bp){
         try {
@@ -71,6 +97,12 @@ public class BlueprintController {
         }
     }
 
+    /**
+     * Update a blueprint by name.
+     * @param name the name of the blueprint
+     * @param filter the filter to apply
+     * @return ResponseEntity
+     */
     @PutMapping("/blueprint/{name}/filter/{filter}")
     public ResponseEntity<?> updateBlueprint(@PathVariable String name, @PathVariable String filter) {
         try {
@@ -84,6 +116,13 @@ public class BlueprintController {
         }
     }
 
+    
+
+    /**
+     * Delete a blueprint by name.
+     * @param name the name of the blueprint to delete
+     * @return ResponseEntity
+     */
     @DeleteMapping("/blueprint/{name}")
     public ResponseEntity<?> deleteBlueprint(@PathVariable String name) {
         try {
