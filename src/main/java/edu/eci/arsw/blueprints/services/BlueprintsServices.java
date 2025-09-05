@@ -11,7 +11,6 @@ import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import edu.eci.arsw.blueprints.services.filters.BlueprintFilter;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -154,15 +153,14 @@ public class BlueprintsServices {
         }
     }
 
-    public void updateBlueprint(String name, Blueprint bp, String filter) throws BlueprintNotFoundException, BlueprintPersistenceException {
-        Blueprint existingBp = bpp.getBlueprint(bp.getAuthor(), name);
-        if (existingBp == null) {
-            throw new BlueprintNotFoundException("The Blueprint made by " + bp.getAuthor() + " with name " + name + " does not exist.");
+    public void updateBlueprint(String name, String filter) throws BlueprintNotFoundException, BlueprintPersistenceException {
+        Set<Blueprint> existingBpSet = getBlueprintsByName(name);
+        if (existingBpSet == null || existingBpSet.isEmpty()) {
+            throw new BlueprintNotFoundException("No Blueprint with name " + name + " exists.");
         }
-        if (!existingBp.getAuthor().equals(bp.getAuthor())) {
-            throw new BlueprintPersistenceException("The author of the updated blueprint must match the existing one.");
-        }
-        if (!existingBp.getName().equals(name)) {
+
+        Blueprint bp = existingBpSet.iterator().next();
+        if (!bp.getName().equals(name)) {
             throw new BlueprintPersistenceException("The name of the updated blueprint must match the existing one.");
         }
         if (filter != null) {
@@ -171,7 +169,8 @@ public class BlueprintsServices {
                 bp = bpf.filter(bp);
             }
         }
-        bpp.saveBlueprint(bp);
+        bpp.updateBlueprint(bp);
     }
 
+    
 }

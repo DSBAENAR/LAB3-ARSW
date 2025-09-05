@@ -8,6 +8,8 @@ import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.services.BlueprintsServices;
 
+import java.util.Set;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,10 +71,11 @@ public class BlueprintController {
     }
 
     @PutMapping("/blueprint/{name}/filter/{filter}")
-    public ResponseEntity<?> updateBlueprint(@PathVariable String name, @RequestBody Blueprint bp, @PathVariable String filter) {
+    public ResponseEntity<?> updateBlueprint(@PathVariable String name, @PathVariable String filter) {
         try {
-            bps.updateBlueprint(name, bp, filter);
-            return ResponseEntity.ok("The Blueprint made by " + bp.getAuthor() + " with name " + bp.getName() + " has been updated.");
+            bps.updateBlueprint(name, filter);
+            Set<Blueprint> bp = bps.getBlueprintsByName(name);
+            return ResponseEntity.ok("The Blueprint made by "  + bp.iterator().next().getAuthor() + " with name " + bp.iterator().next().getName() + " has been updated.");
         } catch (BlueprintNotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         } catch (BlueprintPersistenceException e) {

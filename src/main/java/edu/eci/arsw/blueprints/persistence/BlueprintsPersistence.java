@@ -40,4 +40,12 @@ public interface BlueprintsPersistence {
      */
     public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException;
     
+
+    /**
+     * Updates an existing blueprint.
+     * @param bp the blueprint with updated information
+     * @throws BlueprintPersistenceException if a persistence error occurs
+     * @throws BlueprintNotFoundException if the blueprint does not exist
+     */
+    public void updateBlueprint(Blueprint bp) throws BlueprintPersistenceException, BlueprintNotFoundException;
 }

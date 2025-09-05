@@ -71,5 +71,13 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         }
         return Set.copyOf(blueprints.values());
     }
-    
+
+    @Override
+    public void updateBlueprint(Blueprint bp) throws BlueprintPersistenceException, BlueprintNotFoundException {
+        if (!blueprints.containsKey(new Tuple<>(bp.getAuthor(), bp.getName()))) {
+            throw new BlueprintNotFoundException("Blueprint not found: " + bp);
+        }
+        blueprints.put(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
+    }
+
 }
