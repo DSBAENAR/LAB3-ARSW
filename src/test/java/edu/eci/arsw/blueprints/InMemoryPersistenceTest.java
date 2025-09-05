@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class InMemoryPersistenceTest {
     
-    /*~~(org/openrewrite/staticanalysis/LambdaBlockToExpression)~~>*/
     @Test
     public void saveNewAndLoadTest() throws BlueprintPersistenceException, BlueprintNotFoundException{
         InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
@@ -72,6 +71,51 @@ public class InMemoryPersistenceTest {
         
     }
 
+    @Test
+    public void getAllBlueprints() throws BlueprintPersistenceException, BlueprintNotFoundException {
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
 
-    
+        Point[] pts1 = new Point[]{new Point(1, 1), new Point(2, 2)};
+        Blueprint bp1 = new Blueprint("alice", "paint1", pts1);
+
+        Point[] pts2 = new Point[]{new Point(3, 3), new Point(4, 4)};
+        Blueprint bp2 = new Blueprint("alice", "paint2", pts2);
+
+        try {
+            ibpp.saveBlueprint(bp1);
+            ibpp.saveBlueprint(bp2);
+        } catch (BlueprintPersistenceException e) {
+            // TODO Auto-generated catch block
+            e.getMessage();
+        }
+       
+
+        assertEquals(3, ibpp.getAllBlueprints().size(), "There should be two blueprints.");
+        assertTrue(ibpp.getAllBlueprints().contains(bp1), "Blueprints should contain bp1.");
+        assertTrue(ibpp.getAllBlueprints().contains(bp2), "Blueprints should contain bp2.");
+    }
+
+    @Test
+    public void getBlueprintNotFound() throws BlueprintPersistenceException {
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
+
+        Point[] pts = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp = new Blueprint("john", "thepaint", pts);
+
+        ibpp.saveBlueprint(bp);
+
+        assertThrows(BlueprintNotFoundException.class, () -> {
+            ibpp.getBlueprint("unknown", "thepaint");
+        });
+    }
+
+    @Test
+    public void getEmptyBlueprints() throws BlueprintPersistenceException{
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
+
+        assertThrows(BlueprintPersistenceException.class, () -> {
+            ibpp.getAllBlueprints();
+        });
+    }
+
 }

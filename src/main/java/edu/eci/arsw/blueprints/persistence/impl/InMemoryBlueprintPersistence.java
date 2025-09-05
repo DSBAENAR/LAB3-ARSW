@@ -26,13 +26,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
     private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
 
-    public InMemoryBlueprintPersistence() {
-        
-        Point[] pts=new Point[]{new Point(140, 140),new Point(115, 115)};
-        Blueprint bp=new Blueprint("_authorname_", "_bpname_ ",pts);
-        blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
-        
-    }    
+    public InMemoryBlueprintPersistence() {}    
     
     /**
      * @param bp the new blueprint
@@ -57,7 +51,10 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
      */
     @Override
     public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
-        return blueprints.get(new Tuple<>(author, bprintname));
+        if (blueprints.containsKey(new Tuple<>(author, bprintname))) {
+            return blueprints.get(new Tuple<>(author, bprintname));
+        }
+        throw new BlueprintNotFoundException("Blueprint not found: " + author + ", " + bprintname);
     }
 
     /**
