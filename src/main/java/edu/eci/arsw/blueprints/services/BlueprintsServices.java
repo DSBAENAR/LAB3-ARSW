@@ -9,6 +9,8 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
+import edu.eci.arsw.blueprints.services.filters.BlueprintFilter;
+
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class BlueprintsServices {
    
-    @Autowired
-    BlueprintsPersistence bpp=null;
-    
-    public BlueprintsServices(BlueprintsPersistence bpp){
-        this.bpp=bpp;
+    private final BlueprintsPersistence bpp;
+    private final BlueprintFilter bpf;
+
+    public BlueprintsServices(BlueprintsPersistence bpp, BlueprintFilter bpf) {
+        this.bpp = bpp;
+        this.bpf = bpf;
     }
     /**
      * This method adds a new blueprint to the system
