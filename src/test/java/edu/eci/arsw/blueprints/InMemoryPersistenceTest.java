@@ -85,12 +85,11 @@ public class InMemoryPersistenceTest {
             ibpp.saveBlueprint(bp1);
             ibpp.saveBlueprint(bp2);
         } catch (BlueprintPersistenceException e) {
-            // TODO Auto-generated catch block
             e.getMessage();
         }
        
 
-        assertEquals(3, ibpp.getAllBlueprints().size(), "There should be two blueprints.");
+        assertEquals(2, ibpp.getAllBlueprints().size(), "There should be two blueprints.");
         assertTrue(ibpp.getAllBlueprints().contains(bp1), "Blueprints should contain bp1.");
         assertTrue(ibpp.getAllBlueprints().contains(bp2), "Blueprints should contain bp2.");
     }
