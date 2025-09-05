@@ -13,14 +13,23 @@ public class Tuple<T1, T2> {
         this.o2 = o2;
     }
 
+    /** 
+     * @return T1
+     */
     public T1 getElem1() {
         return o1;
     }
 
+    /** 
+     * @return T2
+     */
     public T2 getElem2() {
         return o2;
     }
 
+    /** 
+     * @return int
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -29,6 +38,11 @@ public class Tuple<T1, T2> {
         return hash;
     }
 
+    
+    /** 
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

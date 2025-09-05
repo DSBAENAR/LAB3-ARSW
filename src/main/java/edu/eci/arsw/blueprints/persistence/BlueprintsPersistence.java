@@ -12,6 +12,7 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 /**
  *
  * @author hcadavid
+ * @author dsbaenar
  */
 public interface BlueprintsPersistence {
     
@@ -49,5 +50,11 @@ public interface BlueprintsPersistence {
      */
     public void updateBlueprint(Blueprint bp) throws BlueprintPersistenceException, BlueprintNotFoundException;
 
+    /**
+     * Deletes an existing blueprint.
+     * @param bp the blueprint to delete
+     * @throws BlueprintNotFoundException if the blueprint does not exist
+     * @throws BlueprintPersistenceException if a persistence error occurs
+     */
     public void deleteBlueprint(Blueprint bp) throws BlueprintNotFoundException, BlueprintPersistenceException;
 }

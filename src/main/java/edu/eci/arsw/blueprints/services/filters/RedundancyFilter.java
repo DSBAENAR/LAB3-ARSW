@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component;
 @Component("redundancyFilter")
 public class RedundancyFilter implements BlueprintFilter {
 
+    /** 
+     * @param bp
+     * @return Blueprint
+     */
     @Override
     public Blueprint filter(Blueprint bp) {
         if (bp == null) {

@@ -23,6 +23,10 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class InMemoryPersistenceTest {
     
+    /** 
+     * @throws BlueprintPersistenceException
+     * @throws BlueprintNotFoundException
+     */
     @Test
     public void saveNewAndLoadTest() throws BlueprintPersistenceException, BlueprintNotFoundException{
         InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
@@ -71,6 +75,10 @@ public class InMemoryPersistenceTest {
         
     }
 
+    /** 
+     * @throws BlueprintPersistenceException
+     * @throws BlueprintNotFoundException
+     */
     @Test
     public void getAllBlueprints() throws BlueprintPersistenceException, BlueprintNotFoundException {
         InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
@@ -94,6 +102,9 @@ public class InMemoryPersistenceTest {
         assertTrue(ibpp.getAllBlueprints().contains(bp2), "Blueprints should contain bp2.");
     }
 
+    /** 
+     * @throws BlueprintPersistenceException
+     */
     @Test
     public void getBlueprintNotFound() throws BlueprintPersistenceException {
         InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
@@ -108,6 +119,9 @@ public class InMemoryPersistenceTest {
         });
     }
 
+    /** 
+     * @throws BlueprintPersistenceException
+     */
     @Test
     public void getEmptyBlueprints() throws BlueprintPersistenceException{
         InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();

@@ -11,10 +11,17 @@ package edu.eci.arsw.blueprints.persistence;
  */
 public class BlueprintPersistenceException extends Exception{
 
+    /**
+     * @param message
+     */
     public BlueprintPersistenceException(String message) {
         super(message);
     }
 
+    /**
+     * @param message
+     * @param cause
+     */
     public BlueprintPersistenceException(String message, Throwable cause) {
         super(message, cause);
     }

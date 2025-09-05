@@ -30,33 +30,55 @@ public class Blueprint {
     public Blueprint() {
     }    
     
+    /** 
+     * @return String
+     */
     public String getName() {
         return name;
     }
 
+    /** 
+     * @return String
+     */
     public String getAuthor() {
         return author;
     }
     
+    /** 
+     * @return List<Point>
+     */
     public List<Point> getPoints() {
         return points;
     }
     
+    /** 
+     * @param p
+     */
     public void addPoint(Point p){
         this.points.add(p);
     }
 
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         return "Blueprint{" + "author=" + author + ", name=" + name + '}';
     }
 
+    /** 
+     * @return int
+     */
     @Override
     public int hashCode() {
         int hash = 7;
         return hash;
     }
 
+    /** 
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

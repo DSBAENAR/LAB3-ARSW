@@ -43,6 +43,12 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         }        
     }
 
+    /** 
+     * @param author
+     * @param bprintname
+     * @return Blueprint
+     * @throws BlueprintNotFoundException
+     */
     /*
      * @param author blueprint's author
      * @param bprintname blueprint's name
@@ -69,6 +75,11 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         return Set.copyOf(blueprints.values());
     }
 
+    /** 
+     * @param bp
+     * @throws BlueprintPersistenceException
+     * @throws BlueprintNotFoundException
+     */
     @Override
     public void updateBlueprint(Blueprint bp) throws BlueprintPersistenceException, BlueprintNotFoundException {
         if (!blueprints.containsKey(new Tuple<>(bp.getAuthor(), bp.getName()))) {
@@ -77,6 +88,11 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         blueprints.put(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
     }
 
+    /** 
+     * @param bp
+     * @throws BlueprintNotFoundException
+     * @throws BlueprintPersistenceException
+     */
     @Override
     public void deleteBlueprint(Blueprint bp) throws BlueprintNotFoundException, BlueprintPersistenceException {
         if (!blueprints.containsKey(new Tuple<>(bp.getAuthor(), bp.getName()))) {
