@@ -125,21 +125,16 @@ En este ejercicio se va a construír un modelo de clases para la capa lógica de
 3. Complete los operaciones getBluePrint() y getBlueprintsByAuthor(). Implemente todo lo requerido de las capas inferiores (por ahora, el esquema de persistencia disponible 'InMemoryBlueprintPersistence') agregando las pruebas correspondientes en 'InMemoryPersistenceTest'.
 
    ```java
-   public void addNewBlueprint(Blueprint bp) {
-        try{
-            if (bpp != null) {
-                bpp.saveBlueprint(bp);
-                }
-        } catch (BlueprintPersistenceException ex) {
-            ex.printStackTrace();    
-        }
+   public Blueprint addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
+        bpp.saveBlueprint(bp); 
+        return bp;
     }
 
-   public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
-        
-        if(author!=null) { bpp.getBlueprint(author,null); }
-        
-        throw new UnsupportedOperationException("The Blueprint made by " + author + " does not exist."); 
+    public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException {
+        if (bpp != null) {
+            return bpp.getAllBlueprints();
+        }
+        throw new BlueprintPersistenceException("There are no Blueprints.");
     }
    ```
 
