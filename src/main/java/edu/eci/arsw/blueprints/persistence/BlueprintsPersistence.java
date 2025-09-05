@@ -48,4 +48,6 @@ public interface BlueprintsPersistence {
      * @throws BlueprintNotFoundException if the blueprint does not exist
      */
     public void updateBlueprint(Blueprint bp) throws BlueprintPersistenceException, BlueprintNotFoundException;
+
+    public void deleteBlueprint(Blueprint bp) throws BlueprintNotFoundException, BlueprintPersistenceException;
 }

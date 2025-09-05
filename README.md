@@ -148,10 +148,95 @@ En este ejercicio se va a construír un modelo de clases para la capa lógica de
     }
    ```
 
-5. Haga un programa en el que cree (mediante Spring) una instancia de BlueprintServices, y rectifique la funcionalidad del mismo: registrar planos, consultar planos, registrar planos específicos, etc.
+4. Haga un programa en el que cree (mediante Spring) una instancia de BlueprintServices, y rectifique la funcionalidad del mismo: registrar planos, consultar planos, registrar planos específicos, etc.
 
-7. Se quiere que las operaciones de consulta de planos realicen un proceso de filtrado, antes de retornar los planos consultados. Dichos filtros lo que buscan es reducir el tamaño de los planos, removiendo datos redundantes o simplemente submuestrando, antes de retornarlos. Ajuste la aplicación (agregando las abstracciones e implementaciones que considere) para que a la clase BlueprintServices se le inyecte uno de dos posibles 'filtros' (o eventuales futuros filtros). No se contempla el uso de más de uno a la vez:
+
+
+    Rutas base: `https://blueprints-e2f7gcd4c0aqcsg2.canadacentral-01.azurewebsites.net/api/blueprints`
+
+    Formato JSON de un blueprint
+    ```json
+    {
+    "author": "alice",
+    "name": "route1",
+    "points": [
+        {"x": 0, "y": 0},
+        {"x": 0, "y": 0},
+        {"x": 1, "y": 1},
+        {"x": 2, "y": 2},
+        {"x": 2, "y": 2},
+        {"x": 3, "y": 3},
+        {"x": 4, "y": 4}
+    ]
+    }
+    ```
+
+    Endpoints
+
+    - Crear un blueprint
+    - Método: POST
+    - URL: /api/blueprints
+    - Headers: Content-Type: application/json
+    - Body: JSON del blueprint (ver arriba)
+    - Respuesta: 201 Created (o 200 OK) con mensaje de confirmación
+    - Errores: 409 Conflict si ya existe (BlueprintPersistenceException)
+
+    Ejemplo curl:
+    ```sh
+    curl -X POST "https://blueprints-e2f7gcd4c0aqcsg2.canadacentral-01.azurewebsites.net/api/blueprints" \
+        -H "Content-Type: application/json" \
+        -d '@blueprint.json'
+    ```
+
+    - Obtener todos los blueprints
+    - Método: GET
+    - URL: /api/blueprints
+    - Respuesta: 200 OK con array JSON de blueprints (si hay un filtro activo, devuelve las versiones filtradas)
+
+    Ejemplo:
+    ```sh
+    curl -X GET "http://localhost:8080/api/blueprints" -H "Accept: application/json"
+    ```
+
+    - Obtener un blueprint por nombre
+    - Método: GET
+    - URL: /api/blueprints/blueprint/{name}
+    - Respuesta: 200 OK con JSON del blueprint (filtrado si hay filtro activo)
+    - Error: 404 Not Found si no existe
+
+    Ejemplo:
+    ```sh
+    curl -X GET "http://localhost:8080/api/blueprints/blueprint/route1" -H "Accept: application/json"
+    ```
+
+    - Obtener blueprints por autor
+    - Método: GET
+    - URL: /api/blueprints/author/{author}
+    - Respuesta: 200 OK con conjunto/array de blueprints del autor (aplica filtro si está activo)
+    - Error: 404 Not Found si no hay planos del autor
+
+    Ejemplo:
+    ```sh
+    curl -X GET "http://localhost:8080/api/blueprints/author/alice" -H "Accept: application/json"
+    ```
+
+
+
+    Códigos de estado importantes
+    - 200 OK — petición satisfactoria (GET, PUT)
+    - 201 Created — recurso creado (POST)
+    - 404 Not Found — recurso no encontrado (BlueprintNotFoundException)
+    - 409 Conflict — intento de crear blueprint que ya existe (BlueprintPersistenceException)
+    - 400 Bad Request — petición mal formada
+
+    Consejos de prueba
+    - Primero POST el blueprint de prueba.
+    - GET para verificar que se almacenó correctamente.
+
+
+
+5. Se quiere que las operaciones de consulta de planos realicen un proceso de filtrado, antes de retornar los planos consultados. Dichos filtros lo que buscan es reducir el tamaño de los planos, removiendo datos redundantes o simplemente submuestrando, antes de retornarlos. Ajuste la aplicación (agregando las abstracciones e implementaciones que considere) para que a la clase BlueprintServices se le inyecte uno de dos posibles 'filtros' (o eventuales futuros filtros). No se contempla el uso de más de uno a la vez:
 	* (A) Filtrado de redundancias: suprime del plano los puntos consecutivos que sean repetidos.
 	* (B) Filtrado de submuestreo: suprime 1 de cada 2 puntos del plano, de manera intercalada.
-
-8. Agrege las pruebas correspondientes a cada uno de estos filtros, y pruebe su funcionamiento en el programa de prueba, comprobando que sólo cambiando la posición de las anotaciones -sin cambiar nada más-, el programa retorne los planos filtrados de la manera (A) o de la manera (B). 
+    
+6. Agrege las pruebas correspondientes a cada uno de estos filtros, y pruebe su funcionamiento en el programa de prueba, comprobando que sólo cambiando la posición de las anotaciones -sin cambiar nada más-, el programa retorne los planos filtrados de la manera (A) o de la manera (B). 

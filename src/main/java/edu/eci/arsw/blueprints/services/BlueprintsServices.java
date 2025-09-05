@@ -171,6 +171,14 @@ public class BlueprintsServices {
         }
         bpp.updateBlueprint(bp);
     }
+    public void deleteBlueprint(String name) throws BlueprintNotFoundException, BlueprintPersistenceException {
+        Set<Blueprint> existingBpSet = getBlueprintsByName(name);
+        if (existingBpSet == null || existingBpSet.isEmpty()) {
+            throw new BlueprintNotFoundException("No Blueprint with name " + name + " exists.");
+        }
 
-    
+        Blueprint bp = existingBpSet.iterator().next();
+        bpp.deleteBlueprint(bp);
+    }
+
 }

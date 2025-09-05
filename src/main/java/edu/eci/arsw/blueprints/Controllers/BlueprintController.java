@@ -11,6 +11,7 @@ import edu.eci.arsw.blueprints.services.BlueprintsServices;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,5 +82,18 @@ public class BlueprintController {
         } catch (BlueprintPersistenceException e) {
             return ResponseEntity.status(400).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/blueprint/{name}")
+    public ResponseEntity<?> deleteBlueprint(@PathVariable String name) {
+        try {
+            bps.deleteBlueprint(name);
+        } catch (BlueprintNotFoundException e) {
+            
+            e.getMessage();
+        } catch (BlueprintPersistenceException e) {
+            e.getMessage();
+        }
+        return ResponseEntity.ok("Blueprint " + name + " has been deleted.");
     }
 }
