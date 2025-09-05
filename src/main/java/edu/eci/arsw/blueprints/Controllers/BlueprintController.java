@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -39,7 +41,7 @@ public class BlueprintController {
     public ResponseEntity<?> getBlueprintByAuthor(@PathVariable String author){
         try {
             return ResponseEntity.ok(bps.getBlueprintsByAuthor(author));
-        } catch (BlueprintNotFoundException e) {
+        } catch (BlueprintPersistenceException e) {
             return ResponseEntity.status(400).body(e.getMessage());
             
         }
@@ -48,9 +50,9 @@ public class BlueprintController {
     @GetMapping("/blueprint/name/{name}")
     public ResponseEntity<?> getBlueprintByName(@PathVariable String name){
         try {
-            return ResponseEntity.ok(bps.getBlueprint(null,name));
-        } catch (BlueprintNotFoundException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
+            return ResponseEntity.ok(bps.getBlueprintsByName(name));
+        } catch (BlueprintPersistenceException e) {
+            return ResponseEntity. status(400).body(e.getMessage());
             
         }
     }
@@ -66,6 +68,15 @@ public class BlueprintController {
         }
     }
 
-
-    
+    @PutMapping("/blueprint/{name}/filter/{filter}")
+    public ResponseEntity<?> updateBlueprint(@PathVariable String name, @RequestBody Blueprint bp, @PathVariable String filter) {
+        try {
+            bps.updateBlueprint(name, bp, filter);
+            return ResponseEntity.ok("The Blueprint made by " + bp.getAuthor() + " with name " + bp.getName() + " has been updated.");
+        } catch (BlueprintNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (BlueprintPersistenceException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+    }
 }
