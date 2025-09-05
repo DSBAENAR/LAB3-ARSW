@@ -153,6 +153,13 @@ public class BlueprintsServices {
         }
     }
 
+    /**
+     * Updates an existing blueprint.
+     * @param name the name of the blueprint to update
+     * @param filter the filter to apply (if any)
+     * @throws BlueprintNotFoundException if the blueprint doesn't exist
+     * @throws BlueprintPersistenceException if there's an error during persistence
+     */
     public void updateBlueprint(String name, String filter) throws BlueprintNotFoundException, BlueprintPersistenceException {
         Set<Blueprint> existingBpSet = getBlueprintsByName(name);
         if (existingBpSet == null || existingBpSet.isEmpty()) {
@@ -171,6 +178,13 @@ public class BlueprintsServices {
         }
         bpp.updateBlueprint(bp);
     }
+
+    /**
+     * Deletes an existing blueprint.
+     * @param name the name of the blueprint to delete
+     * @throws BlueprintNotFoundException if the blueprint doesn't exist
+     * @throws BlueprintPersistenceException if there's an error during persistence
+     */
     public void deleteBlueprint(String name) throws BlueprintNotFoundException, BlueprintPersistenceException {
         Set<Blueprint> existingBpSet = getBlueprintsByName(name);
         if (existingBpSet == null || existingBpSet.isEmpty()) {
